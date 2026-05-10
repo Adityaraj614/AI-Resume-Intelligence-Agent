@@ -2,7 +2,12 @@
 __pycache__/
 *.py[codz]
 *$py.class
-
+__pycache__/
+*.pyc
+.env
+.vscode/
+data/resumes/
+data/outputs/
 # C extensions
 *.so
 
