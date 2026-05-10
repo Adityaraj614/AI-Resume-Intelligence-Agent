@@ -63,7 +63,9 @@ def main():
 
                 st.json({
                     "candidate_name": resume_data["candidate_name"],
-                    "file_name": resume_data["file_name"]
+                    "file_name": resume_data["file_name"],
+                    "metadata": resume_data.get("metadata", {}),
+                    "nlp_validation": resume_data.get("nlp_validation", {})
                 })
 
                 st.text_area(
