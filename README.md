@@ -15,13 +15,13 @@ AI Resume Intelligence Agent is a professional, internship-level engineering pro
 - **Document Parsing:** PyMuPDF (fitz)
 - **Vector Search:** FAISS (CPU)
 - **Embeddings:** Sentence Transformers (`all-MiniLM-L6-v2`)
-- **LLM Integration:**Gemini
+- **LLM Integration:**Groq (Llama 3)
 - **Testing:** Pytest
 ## Technical Decision Log
 
 | Component | Choice | Reason |
 |---|---|---|
-| LLM | Gemini 1.5 Flash | Fast inference, low cost, strong summarization |
+| LLM |  Gemini / Groq-compatible providers | Fast inference, free, strong summarization |
 | Embeddings | all-MiniLM-L6-v2 | Lightweight, fast CPU inference |
 | Vector Store | FAISS | Efficient semantic similarity search |
 | Framework | CrewAI | Lightweight orchestration wrapper for modular agents |
