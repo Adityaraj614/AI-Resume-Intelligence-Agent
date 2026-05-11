@@ -1,5 +1,5 @@
 # AI Resume Intelligence Agent
-
+> The system is intentionally designed as **LLM-assisted rather than LLM-dependent**, ensuring stable recruiter workflows even during provider/API failures.
 ## 1. Project Overview
 AI Resume Intelligence Agent is a professional, internship-level engineering project designed to automate the initial screening and ranking of candidate resumes. Built with a deterministic-first philosophy, the system reliably parses resumes, matches them against job descriptions (JDs) using semantic search, and optionally leverages an LLM to generate explainable candidate insights for recruiters.
 
@@ -34,7 +34,9 @@ AI Resume Intelligence Agent is a professional, internship-level engineering pro
 
 - **Structured Output Pipeline:** Candidate and JD schemas are normalized into structured Python/Pydantic-compatible representations for reliable downstream scoring and export.
 ## 4. Architecture
+### System Architecture Diagram
 
+![Architecture](assets/architecture.png)
 ```mermaid
 flowchart TD
     A[Upload Resumes & JD] --> B{CrewAI Orchestrator}
@@ -51,7 +53,9 @@ flowchart TD
 ```
 
 The system uses a **lightweight CrewAI orchestration wrapper** around the existing deterministic backend. This enforces a strict, sequential agent workflow (JD Agent → Resume Agent → Ranking Agent → Report Agent) while avoiding unstable autonomous execution, maintaining explainability, and allowing seamless ingestion of both PDF resumes and structured LinkedIn JSON profiles.
+## Project Structure
 
+![Project Structure](assets/project_structure.png)
 ## 5. Recruiter Workflow
 1. **Upload:** A recruiter uploads a JD and a batch of PDF resumes.
 2. **Analyze:** The system parses, chunks, and embeds the documents.
@@ -100,10 +104,17 @@ python -m pytest
 
 ## 12. Screenshots
 
-- `![Dashboard](assets/dashboard_screenshot.png)`
-- `![Candidate Rankings](assets/rankings_screenshot.png)`
-- `![Export Workflow](assets/export_screenshot.png)`
+### Dashboard
+![Dashboard](assets/dashboard_screenshot.png)
 
+### Candidate Rankings
+![Candidate Rankings](assets/rankings_screenshot.png)
+
+### Human Review Workflow
+![Human Review](assets/human_review_screenshot.png)
+
+### Export Workflow
+![Export Workflow](assets/export_screenshot.png)
 ## 13. Demo Instructions
 To run a quick demo without external API keys:
 1. Keep the `LLM_PROVIDER=mock` in your `.env`.
