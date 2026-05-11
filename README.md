@@ -502,6 +502,16 @@ The system now supports:
 
 ---
 
+# LinkedIn Integration Support
+
+The platform supports LinkedIn-style candidate ingestion through structured JSON only. This includes mock LinkedIn JSON, exported profile JSON, and recruiter-uploaded structured profile data.
+
+The LinkedIn adapter performs deterministic rule-based normalization for skills, dates, URLs, whitespace, and duplicate handling, then maps every profile into the unified candidate schema used by the existing retrieval, scoring, ranking, recruiter analytics, workflow, and export layers.
+
+No scraping, browser automation, external LinkedIn APIs, or separate LinkedIn ranking pipeline are used. LinkedIn candidates flow through the same recruiter-safe architecture as resume candidates.
+
+---
+
 # Environment Stabilization Work
 
 Major cleanup performed:
@@ -510,10 +520,19 @@ Major cleanup performed:
 - stabilized sentence-transformers
 - calibrated embedding pipeline
 
-Final stable stack:
-- transformers 4.41.2
-- torch 2.1.2+cu121
-- sentence-transformers 5.4.1
+Phase 6C dependency setup:
+
+```bash
+pip install -r requirements.txt
+python -m pytest
+streamlit run main.py
+```
+
+Dependency notes:
+- `faiss-cpu` is used for evaluator-friendly CPU vector search.
+- `sentence-transformers` downloads the configured embedding model on first use.
+- The default LLM provider is deterministic `mock`; OpenAI and Gemini SDKs are not required until real provider integrations are implemented.
+- CUDA-specific torch wheels and local environment artifacts are intentionally excluded from `requirements.txt`.
 
 ---
 

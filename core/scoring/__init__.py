@@ -1,0 +1,1 @@
+"""Structured candidate scoring utilities."""

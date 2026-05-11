@@ -1,0 +1,13 @@
+{
+  "export_metadata": {
+    "generated_at": "not_provided",
+    "report_type": "analytics",
+    "schema_version": "1.0"
+  },
+  "report_data": {
+    "candidate_pool_summary": {
+      "total_candidates": 1
+    }
+  },
+  "report_summary": "Analytics export covers 1 candidates."
+}

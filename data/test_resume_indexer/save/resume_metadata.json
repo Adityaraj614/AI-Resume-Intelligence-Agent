@@ -1,0 +1,18 @@
+[
+  {
+    "candidate_id": "resume_001",
+    "candidate_name": "Asha Rao",
+    "file_name": "asha_resume.pdf",
+    "section": "projects",
+    "chunk_index": 0,
+    "chunk_text": "Built a transformer NLP resume parser."
+  },
+  {
+    "candidate_id": "resume_002",
+    "candidate_name": "Ben Lee",
+    "file_name": "ben_resume.pdf",
+    "section": "skills",
+    "chunk_index": 0,
+    "chunk_text": "Python PyTorch FAISS semantic search."
+  }
+]

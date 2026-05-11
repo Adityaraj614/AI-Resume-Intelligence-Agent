@@ -1,0 +1,55 @@
+{
+  "name": "John Doe",
+  "headline": "Machine Learning Software Engineer",
+  "summary": "Mid-level software engineer focused on machine learning services, retrieval systems, and production API development.",
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "FastAPI",
+    "SQL",
+    "Docker",
+    "PyTorch",
+    "FAISS"
+  ],
+  "experience": [
+    {
+      "title": "Machine Learning Engineer",
+      "company": "Northstar Analytics",
+      "start_date": "2021-06",
+      "end_date": "Present",
+      "location": "Austin, TX",
+      "description": "Built retrieval-backed model evaluation services, maintained Python APIs, and improved candidate matching workflows with deterministic monitoring dashboards."
+    },
+    {
+      "title": "Software Engineer",
+      "company": "BrightPath Systems",
+      "start_date": "2019-07",
+      "end_date": "2021-05",
+      "location": "Dallas, TX",
+      "description": "Developed backend services for data ingestion, batch processing, and SQL reporting used by operations teams."
+    }
+  ],
+  "education": [
+    {
+      "school": "Central State University",
+      "degree": "Bachelor of Science",
+      "field_of_study": "Computer Science",
+      "start_date": "2015",
+      "end_date": "2019"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Azure AI Fundamentals",
+      "issuer": "Microsoft",
+      "issue_date": "2023",
+      "credential_id": "FICTIONAL-AI-1024"
+    }
+  ],
+  "projects": [
+    "Built a semantic search prototype using FAISS and sentence embeddings.",
+    "Created a recruiter analytics dashboard for ranking stability review."
+  ],
+  "location": "Austin, TX",
+  "linkedin_url": "https://linkedin.com/in/john-doe-fictional"
+}

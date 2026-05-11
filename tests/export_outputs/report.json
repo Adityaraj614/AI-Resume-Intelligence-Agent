@@ -1,0 +1,13 @@
+{
+  "export_metadata": {
+    "generated_at": "2026-01-01T00:00:00Z",
+    "report_type": "ranked_candidates",
+    "schema_version": "1.0"
+  },
+  "report_data": [
+    {
+      "candidate_id": "resume_001"
+    }
+  ],
+  "report_summary": "Ranking export contains 1 candidates."
+}

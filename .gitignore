@@ -10,7 +10,23 @@ data/resumes/
 data/outputs/
 # C extensions
 *.so
+# Pytest
+.pytest_cache/
+pytest-cache-files-*
 
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# VS Code
+.vscode/
+.pytest_cache/
+# OS
+.DS_Store
+Thumbs.db
 # Distribution / packaging
 .Python
 build/
