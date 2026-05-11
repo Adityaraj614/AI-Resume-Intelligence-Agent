@@ -17,7 +17,22 @@ AI Resume Intelligence Agent is a professional, internship-level engineering pro
 - **Embeddings:** Sentence Transformers (`all-MiniLM-L6-v2`)
 - **LLM Integration:**Gemini
 - **Testing:** Pytest
+## Technical Decision Log
 
+| Component | Choice | Reason |
+|---|---|---|
+| LLM | Gemini 1.5 Flash | Fast inference, low cost, strong summarization |
+| Embeddings | all-MiniLM-L6-v2 | Lightweight, fast CPU inference |
+| Vector Store | FAISS | Efficient semantic similarity search |
+| Framework | CrewAI | Lightweight orchestration wrapper for modular agents |
+| UI | Streamlit | Rapid prototyping and recruiter-friendly interface |
+| Parsing | PyMuPDF | Reliable PDF extraction performance |
+## Supported Inputs
+- PDF resumes
+- Structured LinkedIn JSON profiles
+- Plain-text Job Descriptions
+
+- **Structured Output Pipeline:** Candidate and JD schemas are normalized into structured Python/Pydantic-compatible representations for reliable downstream scoring and export.
 ## 4. Architecture
 
 ```mermaid
@@ -84,7 +99,7 @@ python -m pytest
 ```
 
 ## 12. Screenshots
-_Placeholders for screenshots demonstrating the SaaS interface._
+
 - `![Dashboard](assets/dashboard_screenshot.png)`
 - `![Candidate Rankings](assets/rankings_screenshot.png)`
 - `![Export Workflow](assets/export_screenshot.png)`
