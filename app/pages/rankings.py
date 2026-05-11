@@ -120,9 +120,13 @@ def _ranked_candidates(workflow_result: Dict[str, Any]) -> List[Dict[str, Any]]:
 
 
 def _score_to_percent(score: float) -> float:
-    if score <= 1:
-        return max(0.0, min(score * 100, 100.0))
-
+    if score <= 1.0:
+        # Scale 0-1 metrics (like raw FAISS similarity) to 100
+        return max(0.0, min(score * 100.0, 100.0))
+    if score <= 10.0:
+        # Scale 10-point metrics (like final_score) to 100
+        return max(0.0, min(score * 10.0, 100.0))
+    # Leave 100-point metrics alone
     return max(0.0, min(score, 100.0))
 
 

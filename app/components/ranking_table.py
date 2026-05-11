@@ -133,9 +133,10 @@ def _numeric_score(value: Any) -> float:
 
 
 def _score_to_percent(score: float) -> float:
-    if score <= 1:
-        return max(0.0, min(score * 100, 100.0))
-
+    if score <= 1.0:
+        return max(0.0, min(score * 100.0, 100.0))
+    if score <= 10.0:
+        return max(0.0, min(score * 10.0, 100.0))
     return max(0.0, min(score, 100.0))
 
 

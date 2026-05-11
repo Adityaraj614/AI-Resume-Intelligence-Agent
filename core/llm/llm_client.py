@@ -26,27 +26,42 @@ class LLMClient:
         self.temperature = get_temperature()
 
     def generate(self, prompt: str) -> Dict:
-        if not isinstance(prompt, str):
-            raise TypeError("prompt must be a string.")
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        try:
+            if not isinstance(prompt, str):
+                raise TypeError("prompt must be a string.")
 
-        if not prompt.strip():
-            raise ValueError("prompt cannot be empty.")
+            if not prompt.strip():
+                raise ValueError("prompt cannot be empty.")
 
-        if self.provider == LLMProvider.MOCK:
+            if self.provider == LLMProvider.MOCK:
+                return self._mock_generate(prompt)
 
-            return self._mock_generate(prompt)
+            if self.provider == LLMProvider.GEMINI:
+                from core.llm.config import get_gemini_api_key
+                if not get_gemini_api_key():
+                    logger.warning("LLM fallback: Gemini API key missing.")
+                    raise ValueError("Gemini API key is missing.")
+                return self._gemini_generate(prompt)
 
-        if self.provider == LLMProvider.GEMINI:
+            if self.provider == LLMProvider.OPENAI:
+                from core.llm.config import get_openai_api_key
+                if not get_openai_api_key():
+                    logger.warning("LLM fallback: OpenAI API key missing.")
+                    raise ValueError("OpenAI API key is missing.")
+                return self._openai_generate(prompt)
 
-            return self._gemini_generate(prompt)
-
-        if self.provider == LLMProvider.OPENAI:
-
-            return self._openai_generate(prompt)
-
-        raise ValueError(
-            f"Unsupported provider: {self.provider}"
-        )
+            raise ValueError(f"Unsupported provider: {self.provider}")
+        except Exception as e:
+            logger.warning(f"LLM generation failed or fallback engaged: {e}")
+            return {
+                "summary": "LLM summary unavailable (API unavailable or fallback engaged).",
+                "strengths": ["Analysis limited to deterministic rules due to LLM unavailability."],
+                "missing_skills": ["Analysis limited to deterministic rules due to LLM unavailability."],
+                "recommendation": "Manual Review Recommended",
+            }
 
     def _mock_generate(self, prompt: str) -> Dict:
         """

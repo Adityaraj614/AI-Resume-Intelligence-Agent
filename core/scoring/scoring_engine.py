@@ -94,9 +94,17 @@ def score_candidate(
 
     normalized_retrieval_weight = retrieval_weight / total_weight
     normalized_llm_weight = llm_weight / total_weight
+    
+    # Base FAISS cosine similarity (typically bounded 0.1 to 0.7 for natural text)
     semantic_score = float(candidate_metadata.get("aggregate_score", 0.0) or 0.0)
     semantic_score = min(max(semantic_score, 0.0), 1.0)
-    semantic_score_10 = normalize_score_range(semantic_score)
+    
+    # CALIBRATION: Apply square root curve to soften raw cosine scaling.
+    # Elevates 0.36 -> 0.60, softening the harsh penalty for imperfect keyword overlap.
+    import math
+    calibrated_semantic_score = math.sqrt(semantic_score)
+    
+    semantic_score_10 = normalize_score_range(calibrated_semantic_score)
     llm_match_score = calculate_llm_match_score(candidate_analysis)
     final_score = (
         (semantic_score_10 * normalized_retrieval_weight)

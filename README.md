@@ -1,578 +1,101 @@
-# AI-Resume-Intelligence-Agent
+# AI Resume Intelligence Agent
 
-## Overview
+## 1. Project Overview
+AI Resume Intelligence Agent is a professional, internship-level engineering project designed to automate the initial screening and ranking of candidate resumes. Built with a deterministic-first philosophy, the system reliably parses resumes, matches them against job descriptions (JDs) using semantic search, and optionally leverages an LLM to generate explainable candidate insights for recruiters.
 
-AI-Resume-Intelligence-Agent is an internship-level GenAI project focused on building an intelligent resume screening and candidate ranking system.
+## 2. Features
+- **Deterministic Parsing:** High-fidelity rule-based extraction of resume sections and metadata.
+- **Semantic Ranking:** Vector-based candidate matching against Job Descriptions using Sentence Transformers and FAISS.
+- **LLM-Assisted Intelligence:** Optional, fail-safe LLM integration to generate recruiter-friendly summaries and highlight strengths/missing skills.
+- **Explainable Scoring:** Transparent confidence scores and recommendation logic that trace back to the raw resume data.
+- **Export Capabilities:** One-click JSON, CSV, and PDF exports for seamless sharing.
 
-The project combines:
+## 3. Tech Stack
+- **Frontend / UI:** Streamlit (SaaS-style layout)
+- **Document Parsing:** PyMuPDF (fitz)
+- **Vector Search:** FAISS (CPU)
+- **Embeddings:** Sentence Transformers (`all-MiniLM-L6-v2`)
+- **LLM Integration:**Gemini
+- **Testing:** Pytest
 
-- Deterministic rule-based parsing
-- Semantic NLP validation
-- Explainable AI preprocessing
-- Resume intelligence engineering
-- Retrieval-ready chunking architecture
+## 4. Architecture
 
-The long-term goal is to evolve this system into an:
-
-# HR Resume & LinkedIn Shortlisting Agent
-
-capable of:
-- screening resumes
-- understanding candidate profiles
-- semantic retrieval
-- explainable ranking
-- recruiter-facing AI reasoning
-
----
-
-# Tech Stack
-
-## Core Stack
-
-- Python
-- Streamlit
-- PyMuPDF
-- Sentence Transformers
-- FAISS
-- Pydantic
-- NumPy
-- Pandas
-- PyTorch
-- Transformers
-
----
-
-# Current Project Structure
-
-```plaintext
-AI-Resume-Intelligence-Agent/
-│
-├── app/
-│   ├── ui.py
-│   └── components/
-│
-├── core/
-│   ├── parser.py
-│   ├── chunker.py
-│   ├── parser_utils.py
-│   ├── section_aliases.py
-│   ├── semantic_boundary.py
-│   ├── metadata_extractor.py
-│   ├── nlp_section_classifier.py
-│   └── security.py
-│
-├── data/
-│   ├── resumes/
-│   ├── jd/
-│   └── outputs/
-│
-├── tests/
-│
-├── requirements.txt
-├── README.md
-└── main.py
+```mermaid
+flowchart TD
+    A[Upload Resumes & JD] --> B{CrewAI Orchestrator}
+    B -->|Task 1| C[JD Agent: Requirements Analysis]
+    B -->|Task 2| D[Resume Agent: Candidate Profiler]
+    D -->|Parsed & Embedded| E[FAISS Vector Index]
+    B -->|Task 3| F[Ranking Agent: Scoring Engineer]
+    F --> G{LLM Configured?}
+    G -- Yes --> H[Generate Candidate Summary]
+    G -- No --> I[Fallback to Base Metrics]
+    H --> J[Candidate Intelligence Dashboard]
+    I --> J
+    B -->|Task 4| K[Report Agent: Reporting Specialist]
 ```
 
----
-
-# Project Goal
-
-Build an AI-powered resume intelligence system that can:
-
-- accept multiple resumes
-- accept a Job Description (JD)
-- parse and structure resume data
-- perform semantic understanding
-- generate retrieval-ready chunks
-- support vector search
-- enable explainable candidate ranking
-
----
-
-# PHASE 1 — Resume & JD Parsing ✅
-
-## Features Implemented
-
-### Streamlit Upload System
-- Multiple PDF upload support
-- JD input support
-- Analyze trigger
-
-### Resume Parsing
-- PDF parsing using PyMuPDF
-- Multi-resume handling
-- Structured resume objects
-
-### Validation UI
-- Resume preview
-- JD preview
-- Extraction validation
-
----
-
-# PHASE 2 — Hybrid Semantic Chunking Engine ✅
-
-This phase evolved far beyond basic chunking.
-
-The preprocessing system became a:
-
-# Hybrid Resume Intelligence Pipeline
-
----
-
-# Phase 2A — Text Cleaning
-
-Implemented:
-- whitespace normalization
-- line break cleanup
-- PDF formatting cleanup
-- text normalization
-
-Purpose:
-Improve embedding quality and reduce noisy retrieval.
-
----
-
-# Phase 2B — Rule-Based Resume Section Extraction
-
-Implemented:
-- heading detection
-- canonical section mapping
-- alias normalization
-- fallback handling
-
-Supported canonical sections:
-
-- contact_info
-- professional_summary
-- skills
-- projects
-- experience
-- education
-- certifications
-- achievements
-- research
-- leadership
-- other
-
----
-
-# Phase 2C — Advanced Alias System
-
-Created:
-`core/section_aliases.py`
-
-Features:
-- realistic resume aliases
-- heading normalization
-- decorated heading detection
-- exact heading matching
-- regex heuristics
-
-Examples supported:
-
-```plaintext
-TECH STACK
-TECHNICAL SKILLS
-CORE COMPETENCIES
-PROJECT EXPERIENCE
-CAREER SUMMARY
-AWARDS & HONORS
-```
-
----
-
-# Phase 2D — Semantic Boundary Repair
-
-Created:
-`core/semantic_boundary.py`
-
-Purpose:
-Prevent semantic section bleed.
-
-Example problem:
-
-```plaintext
-PROJECTS
-Built AI chatbot...
-
-TECH STACK
-Python, FastAPI, PyTorch
-
-Worked with APIs...
-```
-
-Without semantic repair:
-- narrative text could incorrectly remain in skills
-
-Implemented:
-- semantic section hints
-- narrative flow tracking
-- section repair heuristics
-- low-signal section merging
-
----
-
-# Phase 2E — Fallback Routing
-
-Implemented:
-- "other" section handling
-- malformed section preservation
-- unknown heading routing
-
-Purpose:
-Avoid losing valuable resume information.
-
----
-
-# Phase 2F — Metadata Extraction
-
-Created:
-`core/metadata_extractor.py`
-
-Extracted:
-- candidate name
-- email
-- phone
-- LinkedIn
-- GitHub
-- portfolio
-- location
-
-Used:
-- regex extraction
-- conservative heuristics
-- contact-zone parsing
-
----
-
-# Phase 2G — Structured Chunk Storage
-
-Implemented:
-- section-wise chunking
-- chunk overlap support
-- structured storage
-
-Chunking goals:
-- retrieval quality
-- semantic isolation
-- embedding preparation
-
----
-
-# Phase 2H — Hybrid NLP Semantic Validation Layer
-
-Created:
-`core/nlp_section_classifier.py`
-
-This became one of the most important architectural decisions.
-
-The system uses:
-
-## Deterministic Rule Parsing FIRST
-
-Then:
-## NLP validation ONLY when necessary
-
----
-
-# Final Hybrid Architecture
-
-```plaintext
-Rule-Based Parsing
-↓
-Regex Heading Detection
-↓
-Fallback Routing
-↓
-Semantic Boundary Repair
-↓
-Parsing Quality Evaluation
-↓
-Conditional NLP Validation
-↓
-Disagreement Detection
-↓
-Fallback Semantic Repair
-↓
-Section-wise Chunking
-```
-
----
-
-# Why This Architecture Was Chosen
-
-Pure rule systems:
-- brittle on edge cases
-
-Pure NLP systems:
-- unstable
-- expensive
-- harder to debug
-
-Hybrid approach provides:
-- explainability
-- determinism
-- semantic awareness
-- scalability
-
----
-
-# NLP Validation Features
-
-Implemented:
-- semantic prototype matching
-- cosine similarity validation
-- disagreement detection
-- conservative repair
-- confidence scoring
-- parsing quality evaluation
-- conditional NLP activation
-
-Important:
-NLP does NOT replace rule-based parsing.
-
-It only:
-- validates
-- repairs ambiguous cases
-- classifies fallback content
-
----
-
-# Conditional NLP Activation
-
-NLP activates ONLY when:
-- parsing quality is weak
-- malformed sections exist
-- fallback content is high
-- semantic disagreement occurs
-
-Clean resumes skip NLP entirely.
-
-This improves:
-- speed
-- explainability
-- stability
-
----
-
-# Major Problems Faced & Solutions
-
-## Problem 1 — LangChain Dependency Instability
-
-### Issue
-LangChain ecosystem caused:
-- dependency conflicts
-- import failures
-- transformer mismatches
-- unstable text splitter behavior
-
-### Solution
-Removed:
-- langchain
-- langgraph
-- langchain-community
-- langchain-classic
-
-Built:
-- fully custom preprocessing pipeline
-
-Result:
-- cleaner architecture
-- better stability
-- lower dependency complexity
-
----
-
-## Problem 2 — Weak Basic Chunking
-
-### Issue
-Naive chunking could:
-- split projects incorrectly
-- mix sections
-- damage retrieval quality
-
-### Solution
-Built:
-- section-aware chunking
-- semantic boundary repair
-- hybrid validation pipeline
-
-Result:
-- retrieval-ready chunks
-- semantic integrity preservation
-
----
-
-## Problem 3 — Resume Formatting Variability
-
-### Issue
-Resumes use:
-- inconsistent headings
-- missing headings
-- decorative formatting
-- compressed layouts
-
-### Solution
-Implemented:
-- alias system
-- regex heading heuristics
-- fallback routing
-- semantic repair
-
----
-
-## Problem 4 — NLP Overcorrection Risk
-
-### Issue
-NLP classifiers can:
-- aggressively override sections
-- destabilize parsing
-- hallucinate structure
-
-### Solution
-Built:
-- conservative thresholds
-- disagreement logic
-- rule-first architecture
-- conditional activation
-
----
-
-## Problem 5 — Embedding Calibration
-
-### Issue
-MiniLM similarity scores were lower than expected for:
-- short technical phrases
-- compressed resume text
-
-Example:
-
-```plaintext
-Python FastAPI PyTorch
-```
-
-initially produced weak confidence.
-
-### Solution
-Improved:
-- semantic prototypes
-- threshold calibration
-- keyword-rich prototype design
-- margin-based confidence logic
-
----
-
-# Explainability Features
-
-Implemented:
-- section confidence reporting
-- rule confidence
-- NLP confidence
-- disagreement reporting
-- repair tracking
-
-Example:
-
-```python
-{
-    "final_section": "projects",
-    "rule_section": "projects",
-    "nlp_section": "projects",
-    "agreement": True,
-    "repair_applied": False
-}
-```
-
----
-
-# Current System Capabilities
-
-The system now supports:
-
-✅ Resume parsing  
-✅ JD handling  
-✅ Metadata extraction  
-✅ Section-aware chunking  
-✅ Semantic boundary repair  
-✅ Conditional NLP validation  
-✅ Confidence scoring  
-✅ Retrieval-ready preprocessing  
-✅ Explainable parsing pipeline  
-
----
-
-# LinkedIn Integration Support
-
-The platform supports LinkedIn-style candidate ingestion through structured JSON only. This includes mock LinkedIn JSON, exported profile JSON, and recruiter-uploaded structured profile data.
-
-The LinkedIn adapter performs deterministic rule-based normalization for skills, dates, URLs, whitespace, and duplicate handling, then maps every profile into the unified candidate schema used by the existing retrieval, scoring, ranking, recruiter analytics, workflow, and export layers.
-
-No scraping, browser automation, external LinkedIn APIs, or separate LinkedIn ranking pipeline are used. LinkedIn candidates flow through the same recruiter-safe architecture as resume candidates.
-
----
-
-# Environment Stabilization Work
-
-Major cleanup performed:
-- removed LangChain ecosystem
-- fixed transformer version conflicts
-- stabilized sentence-transformers
-- calibrated embedding pipeline
-
-Phase 6C dependency setup:
-
+The system uses a **lightweight CrewAI orchestration wrapper** around the existing deterministic backend. This enforces a strict, sequential agent workflow (JD Agent → Resume Agent → Ranking Agent → Report Agent) while avoiding unstable autonomous execution, maintaining explainability, and allowing seamless ingestion of both PDF resumes and structured LinkedIn JSON profiles.
+
+## 5. Recruiter Workflow
+1. **Upload:** A recruiter uploads a JD and a batch of PDF resumes.
+2. **Analyze:** The system parses, chunks, and embeds the documents.
+3. **Rank:** Candidates are semantically ranked against the JD.
+4. **Review:** The recruiter reviews the Candidate Intelligence dashboard to see strengths, missing skills, and overall recommendations.
+5. **Export:** The final shortlist is exported as a JSON payload, CSV, or PDF report.
+
+## 6. AI/LLM Pipeline
+The LLM pipeline is strictly separated from the retrieval engine to guarantee stability. It acts purely as a summarization tool, interpreting the semantic matches found by FAISS. By default, the system runs with a `mock` provider, ensuring zero dependencies on external APIs unless explicitly configured. If an API key is missing or the provider fails, the system safely falls back without crashing the UI.
+
+## 7. Ranking Pipeline
+Rankings are generated by comparing the JD embeddings against section-wise resume chunks. The system prioritizes exact skill matches and semantic proximity, avoiding black-box LLM decision-making to maintain explainability and consistency.
+
+## 8. Security Mitigations
+This project takes a deterministic-first approach to security, ensuring that AI enhances rather than controls the workflow.
+
+- **Data Privacy & Local Processing:** All primary parsing, semantic chunking, embedding (`sentence-transformers`), and FAISS vector retrieval are executed completely locally. Candidate data is never exposed to the public internet for the core ranking engine.
+- **Deterministic Ranking Safeguards:** The scoring engine relies purely on math (cosine similarity against exact chunks). Rankings cannot be manipulated or hallucinated by LLM prompt injections.
+- **API Key Protection:** The `.env` file containing API keys is strictly ignored in version control (`.gitignore`), and the `.env.example` provides safe templates.
+- **Prompt Injection Mitigation:** The LLM is used *only* as a read-only summarization layer applied at the very end of the pipeline. It is not provided with function-calling capabilities or write access. 
+- **Graceful Failures:** The LLM integration is non-blocking. If API quotas are exhausted, keys are missing, or requests timeout, the system degrades gracefully into fallback deterministic text without crashing the UI.
+- **Human-in-the-Loop:** All outputs generated by the Agent are presented to a recruiter through the UI for manual override and review.
+
+## 9. Setup Instructions
+1. Clone the repository.
+2. Create a virtual environment: `python -m venv venv`
+3. Activate the environment: `venv\Scripts\activate` (Windows) or `source venv/bin/activate` (Mac/Linux).
+4. Install dependencies: `pip install -r requirements.txt`
+
+## 10. Environment Variables
+Copy `.env.example` to `.env` and configure your API keys (optional).
 ```bash
-pip install -r requirements.txt
-python -m pytest
+cp .env.example .env
+```
+_Note: Do not commit your `.env` file. Never expose secrets._
+
+## 11. Running Locally
+Launch the Streamlit app:
+```bash
 streamlit run main.py
 ```
+Run tests:
+```bash
+python -m pytest
+```
 
-Dependency notes:
-- `faiss-cpu` is used for evaluator-friendly CPU vector search.
-- `sentence-transformers` downloads the configured embedding model on first use.
-- The default LLM provider is deterministic `mock`; OpenAI and Gemini SDKs are not required until real provider integrations are implemented.
-- CUDA-specific torch wheels and local environment artifacts are intentionally excluded from `requirements.txt`.
+## 12. Screenshots
+_Placeholders for screenshots demonstrating the SaaS interface._
+- `![Dashboard](assets/dashboard_screenshot.png)`
+- `![Candidate Rankings](assets/rankings_screenshot.png)`
+- `![Export Workflow](assets/export_screenshot.png)`
 
----
+## 13. Demo Instructions
+To run a quick demo without external API keys:
+1. Keep the `LLM_PROVIDER=mock` in your `.env`.
+2. Upload any PDF resume and text JD.
+3. Observe the deterministic ranking and safe fallback summaries.
 
-# Current Architecture Quality
-
-The preprocessing pipeline is now:
-
-- scalable
-- modular
-- explainable
-- retrieval-friendly
-- deterministic-first
-- semantically aware
-- FAISS-ready
-
----
-
-# NEXT PHASE
-
-# Phase 3 — Embeddings & FAISS
-
-Upcoming goals:
-- embedding generation
-- vector storage
-- semantic retrieval
-- candidate similarity search
-- recruiter query support
-
----
-
-# Long-Term Vision
-
-Transform the system into:
-
-# HR Resume & LinkedIn Shortlisting Agent
-
-with:
-- semantic candidate ranking
-- recruiter-facing AI reasoning
-- explainable recommendations
-- LinkedIn enrichment
-- conversational querying
-- intelligent shortlisting
+## 14. Future Improvements
+- Pluggable support for local, open-source LLMs (e.g., Llama 3 via Ollama).
+- Advanced OCR integration for image-based PDFs.
+- Enhanced analytics tracking candidate conversion rates.

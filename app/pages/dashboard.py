@@ -41,13 +41,13 @@ def render_dashboard() -> None:
 
 def run_dashboard_analysis(inputs: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Execute the existing backend intake, ranking, and recruiter workflow.
-
-    Kept in this module for existing tests and callers. UI pages delegate to
-    this function instead of creating any parallel workflow path.
+    Execute the existing backend intake, ranking, and recruiter workflow
+    using the lightweight CrewAI orchestration wrapper.
     """
-
-    return run_dashboard_workflow(inputs)
+    from core.agents.crew import LightweightOrchestrator
+    
+    orchestrator = LightweightOrchestrator()
+    return orchestrator.run_sequential_flow(inputs)
 
 
 def _render_recent_candidates(workflow_result: Dict[str, Any]) -> None:
@@ -168,9 +168,10 @@ def _navigate(page: str) -> None:
 
 
 def _score_to_percent(score: float) -> float:
-    if score <= 1:
-        return max(0.0, min(score * 100, 100.0))
-
+    if score <= 1.0:
+        return max(0.0, min(score * 100.0, 100.0))
+    if score <= 10.0:
+        return max(0.0, min(score * 10.0, 100.0))
     return max(0.0, min(score, 100.0))
 
 

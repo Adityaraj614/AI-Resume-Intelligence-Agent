@@ -33,15 +33,17 @@ def test_provider_string_is_normalized():
     assert client.provider == LLMProvider.MOCK
 
 
-def test_placeholder_providers_raise_not_implemented():
+def test_placeholder_providers_fallback_safely():
     gemini_client = LLMClient(provider=LLMProvider.GEMINI)
     openai_client = LLMClient(provider=LLMProvider.OPENAI)
 
-    with pytest.raises(NotImplementedError):
-        gemini_client.generate("grounded prompt")
+    res_gemini = gemini_client.generate("grounded prompt")
+    res_openai = openai_client.generate("grounded prompt")
 
-    with pytest.raises(NotImplementedError):
-        openai_client.generate("grounded prompt")
+    assert validate_llm_response(res_gemini)
+    assert validate_llm_response(res_openai)
+    assert "fallback engaged" in res_gemini["summary"]
+    assert "fallback engaged" in res_openai["summary"]
 
 
 def test_invalid_response_validation_fails():
